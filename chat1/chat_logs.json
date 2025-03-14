@@ -1,167 +1,52 @@
 [
     {
-        "timestamp": "2025-02-18 16:28:33",
-        "username": "User96",
-        "message": ""
+        "user": "Swastik Ghimire",
+        "message": "asd",
+        "timestamp": "2025-03-14T18:14:34.606Z"
     },
     {
-        "timestamp": "2025-02-18 17:44:06",
-        "username": "User50",
-        "message": ""
+        "user": "Rajesh Hamal",
+        "message": "Booring",
+        "timestamp": "2025-03-14T18:15:15.339Z"
     },
     {
-        "timestamp": "2025-02-18 17:44:10",
-        "username": "User50",
-        "message": "Hey"
+        "user": "Swastik Ghimire",
+        "message": "lll",
+        "timestamp": "2025-03-14T18:17:31.045Z"
     },
     {
-        "timestamp": "2025-02-18 17:44:23",
-        "username": "User50",
-        "message": "How are you doing"
+        "user": "Rajesh Hamal",
+        "message": "It's not working",
+        "timestamp": "2025-03-14T18:17:50.845Z"
     },
     {
-        "timestamp": "2025-02-18 17:44:33",
-        "username": "User90",
-        "message": ""
+        "user": "Rajesh Hamal",
+        "message": "what the hell",
+        "timestamp": "2025-03-14T18:18:05.412Z"
     },
     {
-        "timestamp": "2025-02-18 17:44:44",
-        "username": "User90",
-        "message": "I'm fine, how are you?"
+        "user": "Rajesh Hamal",
+        "message": "please",
+        "timestamp": "2025-03-14T18:18:11.721Z"
     },
     {
-        "timestamp": "2025-02-18 17:45:01",
-        "username": "User50",
-        "message": "great, how to cook fryrice?"
+        "user": "Swastik Ghimire",
+        "message": "i see that's what's going on",
+        "timestamp": "2025-03-14T18:18:24.000Z"
     },
     {
-        "timestamp": "2025-02-18 17:45:10",
-        "username": "User90",
-        "message": "I have no idea"
+        "user": "Rajesh Hamal",
+        "message": "asd",
+        "timestamp": null
     },
     {
-        "timestamp": "2025-02-18 17:45:18",
-        "username": "User50",
-        "message": "wanna learn?"
+        "user": "Swastik Ghimire",
+        "message": "I said it's working my guy",
+        "timestamp": null
     },
     {
-        "timestamp": "2025-02-18 17:45:24",
-        "username": "User90",
-        "message": "sure sure"
-    },
-    {
-        "timestamp": "2025-02-20 15:47:41",
-        "username": "User50",
-        "message": ""
-    },
-    {
-        "timestamp": "2025-02-20 15:48:29",
-        "username": "User86",
-        "message": ""
-    },
-    {
-        "timestamp": "2025-02-20 15:49:14",
-        "username": "User92",
-        "message": ""
-    },
-    {
-        "timestamp": "2025-02-20 15:49:26",
-        "username": "User92",
-        "message": "Yo Yo"
-    },
-    {
-        "timestamp": "2025-02-20 15:49:30",
-        "username": "User92",
-        "message": "Cook cook"
-    },
-    {
-        "timestamp": "2025-02-20 15:49:34",
-        "username": "User92",
-        "message": "mehh mehh"
-    },
-    {
-        "timestamp": "2025-02-20 15:49:38",
-        "username": "User92",
-        "message": "hey hey"
-    },
-    {
-        "timestamp": "2025-02-20 15:49:41",
-        "username": "User92",
-        "message": "how how"
-    },
-    {
-        "timestamp": "2025-02-20 15:49:45",
-        "username": "User108",
-        "message": ""
-    },
-    {
-        "timestamp": "2025-02-20 15:49:51",
-        "username": "User108",
-        "message": "Waazaaaap"
-    },
-    {
-        "timestamp": "2025-02-20 15:49:56",
-        "username": "User108",
-        "message": "How you doooing"
-    },
-    {
-        "timestamp": "2025-02-20 15:50:02",
-        "username": "User108",
-        "message": "Great great"
-    },
-    {
-        "timestamp": "2025-02-20 15:50:11",
-        "username": "User92",
-        "message": "you olso great great"
-    },
-    {
-        "timestamp": "2025-02-20 15:50:17",
-        "username": "User92",
-        "message": "noaaaice"
-    },
-    {
-        "timestamp": "2025-02-20 16:00:37",
-        "username": "User124",
-        "message": ""
-    },
-    {
-        "timestamp": "2025-02-20 16:00:48",
-        "username": "User124",
-        "message": "Hi"
-    },
-    {
-        "timestamp": "2025-02-20 16:01:00",
-        "username": "User132",
-        "message": ""
-    },
-    {
-        "timestamp": "2025-02-20 16:01:08",
-        "username": "User132",
-        "message": "hello"
-    },
-    {
-        "timestamp": "2025-02-20 16:01:19",
-        "username": "User124",
-        "message": "Let's discuss recipe"
-    },
-    {
-        "timestamp": "2025-02-20 16:01:26",
-        "username": "User132",
-        "message": "sure"
-    },
-    {
-        "timestamp": "2025-02-25 04:07:56",
-        "username": "User50",
-        "message": ""
-    },
-    {
-        "timestamp": "2025-02-25 04:08:14",
-        "username": "User50",
-        "message": "Hey"
-    },
-    {
-        "timestamp": "2025-02-25 04:08:33",
-        "username": "User88",
-        "message": ""
+        "user": "Swastik Ghimire",
+        "message": "That's just great",
+        "timestamp": null
     }
 ]

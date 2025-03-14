@@ -1,139 +1,131 @@
-<?php
-include('includes/header.php');
-
-// Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
-?>
-
     <title>Group Chat</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        .container1 {
-            max-width: 600px;
-            margin: 50px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
         #chat-box {
             height: 400px;
             overflow-y: auto;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        .message {
-            margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 4px;
-            max-width: 70%;
-        }
-        .message.user {
-            background-color: #d1e7dd;
-            align-self: flex-start;
-        }
-        .message.other {
-            background-color: #f8d7da;
-            align-self: flex-end;
-        }
-        .message .username {
-            font-weight: bold;
-            margin-right: 8px;
-        }
-        #message-input {
-            display: flex;
+            border: 1px solid #ccc;
             padding: 10px;
             background-color: #f9f9f9;
         }
-        #message-input input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            outline: none;
+        .message {
+            margin-bottom: 10px;
         }
-        #message-input button {
-            margin-left: 10px;
-            padding: 8px 12px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
+        .message .username {
+            font-weight: bold;
+            color: #007bff;
         }
-        #message-input button:hover {
-            background-color: #0056b3;
+        .message .timestamp {
+            font-size: 0.8em;
+            color: #6c757d;
         }
     </style>
-    <div class="container1 mb-3">
-        <div id="chat-box"></div>
-        <div id="message-input">
-            <input type="text" id="message" placeholder="Type your message..." />
-            <button onclick="sendMessage()">Send</button>
+
+    <?php
+    include('includes/header.php');
+
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        echo "<div class='container mt-5'>";
+        echo "<p class='text-center text-danger'>You must be logged in to access the group chat.</p>";
+        echo "</div>";
+        exit;
+    }
+
+    // Load chat history from chat_logs.json
+    $chatLogFile = __DIR__ . '/chat_logs.json';
+    $chatHistory = [];
+    if (file_exists($chatLogFile)) {
+        $chatHistory = json_decode(file_get_contents($chatLogFile), true) ?: [];
+    }
+    ?>
+
+    <div class="container my-5">
+        <h1 class="mb-4 text-center fw-bold">Group Chat</h1>
+
+        <!-- Chat Box -->
+        <div id="chat-box" class="mb-4">
+            <?php foreach ($chatHistory as $message): ?>
+                <div class="message">
+                    <span class="username"><?php echo htmlspecialchars($message['user']); ?>:</span>
+                    <span><?php echo htmlspecialchars($message['message']); ?></span>
+                    <small class="timestamp text-muted float-end">(<?php echo htmlspecialchars($message['timestamp']); ?>)</small>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Message Input -->
+        <div class="input-group">
+            <input type="text" id="message-input" class="form-control" placeholder="Type a message..." aria-label="Message" aria-describedby="send-button">
+            <button id="send-button" class="btn btn-primary" type="button">Send</button>
         </div>
     </div>
 
-    <script>
-        const chatBox = document.getElementById('chat-box');
-        const messageInput = document.getElementById('message');
-
-        // Get the user_id and first_name from PHP session
-        const userId = <?php echo $_SESSION['user_id']; ?>;
-        const firstName = "<?php echo $_SESSION['first_name']; ?>";
-
-        // Connect to the WebSocket server
-        const ws = new WebSocket('ws://localhost:8080');
-
-        ws.onopen = () => {
-            console.log('Connected to the chat server');
-            // Send the user_id to the server
-            ws.send(JSON.stringify({ user_id: userId }));
-        };
-
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', data.username === firstName ? 'user' : 'other');
-            messageDiv.innerHTML = `<span class="username">${data.username}</span>: ${data.message}`;
-            chatBox.appendChild(messageDiv);
-            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
-        };
-
-        ws.onerror = (error) => {
-            console.error('WebSocket error:', error);
-        };
-
-        ws.onclose = () => {
-            console.log('Disconnected from the chat server');
-        };
-
-        function sendMessage() {
-            const message = messageInput.value.trim();
-            if (message) {
-                const data = {
-                    user_id: userId,
-                    message: message
-                };
-                ws.send(JSON.stringify(data)); // Send the message to the server
-                messageInput.value = ''; // Clear the input field
-            }
-        }
-
-        // Allow sending messages by pressing Enter
-        messageInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    </script>
     <?php include('includes/footer.php'); ?>
-</body>
-</html>
+
+    <!-- JavaScript for WebSocket Communication -->
+    <script>
+        // Get the current user's name
+        const currentUser = '<?php echo htmlspecialchars($_SESSION['first_name'] . ' ' . $_SESSION['last_name']); ?>';
+
+        // Establish WebSocket connection
+        const socket = new WebSocket('ws://localhost:9000');
+
+socket.onmessage = function(event) {
+    console.log("Message received:", event.data); // Debugging
+
+    const data = JSON.parse(event.data);
+    appendMessage(data.user, data.message);
+};
+
+// Send message function
+document.getElementById('send-button').addEventListener('click', function() {
+    sendMessage();
+});
+
+document.getElementById('message-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+        event.preventDefault();
+    }
+});
+
+// Function to send messages
+function sendMessage() {
+    const messageInput = document.getElementById('message-input');
+    const message = messageInput.value.trim();
+
+    if (message) {
+        const messageData = {
+            user: currentUser,
+            message: message
+        };
+
+        // Send message to WebSocket server
+        socket.send(JSON.stringify(messageData));
+
+        // Immediately append message to chat without waiting for WebSocket
+        appendMessage(currentUser, message);
+
+        // Clear input field
+        messageInput.value = '';
+    }
+}
+
+// Function to append message to chat box
+function appendMessage(user, message) {
+    const chatBox = document.getElementById('chat-box');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message';
+    messageDiv.innerHTML = `
+        <span class="username">${user}:</span> 
+        <span>${message}</span> 
+        <small class="timestamp text-muted float-end">(${new Date().toLocaleTimeString()})</small>
+    `;
+
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
+
+    </script>
+    </body>
+    </html>
